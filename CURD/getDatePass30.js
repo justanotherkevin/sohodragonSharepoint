@@ -39,7 +39,10 @@ function openPDF() {
 var passDate = new Date(new Date().setDate(new Date().getDate() - 30));
 _spPageContextInfo.webAbsoluteUrl + "/_api/web/Lists/GetByTitle('" + libraryName + "')/Items?$filter= Created lt datetime'" + passDate.toISOString() + "'",
 //libraryName take in string 
-fetchFromLibrary = (libraryName) => {
+
+var dataRecieved;
+
+fetchFromLibrary = (libraryName, dataRecieved ) => {
     if (typeof libraryName != "string") {
         //error handeling
         console.log('invalid variable type')
@@ -56,15 +59,44 @@ fetchFromLibrary = (libraryName) => {
                     throw new Error('Network response was not ok.');
                 }
             }).then(data => {
-                if (window.console) {
-                    return data.d.resultsl
-                }
+                if (window.console) {console.log('Data received')}
+                dataRecieved = data.d.results
+                test1(array);
+                // return data.d.results;
             }).catch(function (error) {
                 throw new Error(error); 
-            })
+            });        
+            return array
     }
-
 }
+
+
+"Accept": "application/json;odata=verbose",  
+"Content-Type": "application/json;odata=verbose",  
+"X-RequestDigest": $("#__REQUESTDIGEST").val(),  
+"IF-MATCH": "*",  
+"X-HTTP-Method": null  
+
+// retrive code for sharepoint 
+function getItems(libraryName){
+    return $.ajax({
+        url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/Lists/GetByTitle('" + libraryName + "')/Items"
+        headers: {
+            "Accept": "application/json;odata=verbose",  
+            "Content-Type": "application/json;odata=verbose",  
+            "X-RequestDigest": $("#__REQUESTDIGEST").val(),  
+            "IF-MATCH": "*",  
+            "X-HTTP-Method": null  
+        }
+    });
+}
+
+
+
+
+
+
+
 
 
 
