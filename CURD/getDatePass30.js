@@ -5,7 +5,7 @@ function openPDF() {
       'Accept': 'application/json; odata=verbose'
   })
 
-  var getOptions = { 
+  var getOptions = {
       method: 'GET',
       headers: getHeaders,
       credentials: 'include'
@@ -38,7 +38,7 @@ function openPDF() {
 
 var passDate = new Date(new Date().setDate(new Date().getDate() - 30));
 _spPageContextInfo.webAbsoluteUrl + "/_api/web/Lists/GetByTitle('" + libraryName + "')/Items?$filter= Created lt datetime'" + passDate.toISOString() + "'",
-//libraryName take in string 
+//libraryName take in string
 
 var dataRecieved;
 
@@ -64,35 +64,52 @@ fetchFromLibrary = (libraryName, dataRecieved ) => {
                 test1(array);
                 // return data.d.results;
             }).catch(function (error) {
-                throw new Error(error); 
-            });        
+                throw new Error(error);
+            });
             return array
     }
 }
 
 
-"Accept": "application/json;odata=verbose",  
-"Content-Type": "application/json;odata=verbose",  
-"X-RequestDigest": $("#__REQUESTDIGEST").val(),  
-"IF-MATCH": "*",  
-"X-HTTP-Method": null  
+"Accept": "application/json;odata=verbose",
+"Content-Type": "application/json;odata=verbose",
+"X-RequestDigest": $("#__REQUESTDIGEST").val(),
+"IF-MATCH": "*",
+"X-HTTP-Method": null
 
-// retrive code for sharepoint 
+// retrive code for sharepoint
 function getItems(libraryName){
     return $.ajax({
         url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/Lists/GetByTitle('" + libraryName + "')/Items"
         headers: {
-            "Accept": "application/json;odata=verbose",  
-            "Content-Type": "application/json;odata=verbose",  
-            "X-RequestDigest": $("#__REQUESTDIGEST").val(),  
-            "IF-MATCH": "*",  
-            "X-HTTP-Method": null  
+            "Accept": "application/json;odata=verbose",
+            "Content-Type": "application/json;odata=verbose",
+            "X-RequestDigest": $("#__REQUESTDIGEST").val(),
+            "IF-MATCH": "*",
+            "X-HTTP-Method": null
         }
     });
 }
 
+ajax("/echo/json")
+  .then(function(result) {
+    // Code depending on result
+  })
+  .catch(function() {
+    // An error occurred
+  });
 
-
+getItems()
+.done(function(r) {
+  if (r) {
+    // goood
+  } else {
+    // bad
+  }
+})
+.faile(function(x) {
+  // was not done
+})
 
 
 
@@ -139,4 +156,3 @@ fetch(_spPageContextInfo.webAbsoluteUrl + "/_api/lists/getbytitle('Sample List')
     console.error(error);
     alert('Error has been logged to the console');
 })
-
